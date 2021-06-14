@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "stockPriceApi"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-j7172lj5cf8m"
+s3_prefix = "stockPriceApi"
+region = "eu-west-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
