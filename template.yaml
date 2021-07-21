@@ -2,29 +2,23 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Resources:
-  StockPriceAPIFunction:
+  StockPriceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
-      Handler: app.lambdaHandler
-      Runtime: nodejs12.x
+      CodeUri: src-py/
+      Handler: app.handler
+      Runtime: python3.7
       Tracing: Active
       Events:
-        Temperature:
+        StockAPIRequest:
           Type: Api
           Properties:
             Path: /
             Method: get
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref DynamoDBTable
-
-  DynamoDBTable:
-    Type: AWS::Serverless::SimpleTable
-    Properties:
-      TableName: stock-price-table
+            RequestParameters:
+              - method.request.querystring.ticker
 
 Outputs:
-  StockPriceAPI:
+  StockPrice:
     Description: "API Gateway endpoint URL for Prod stage for Stock Price function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
